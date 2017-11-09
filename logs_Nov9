@@ -1,0 +1,50 @@
+# (MAYBE) IMPORTANT TABLES:
+# NOTEEVENTS | DIAGNOSES_ICD
+
+# discharge summary extraction
+select * from NOTEEVENTS where Category='Discharge summary' order by subject_id limit 1000
+
+# the number of discharge summary is 59652
+select count(*) from NOTEEVENTS where Category='Discharge summary'
+
+# REFERENCE:
+# https://querybuilder-lcp.mit.edu/dashboard.cgi#
+# https://mimic.physionet.org/mimictables/noteevents/
+# https://physionet.org/physiobank/tutorials/using-mimic2/
+
+
+
+###################
+## Preprocessing ##
+###################
+
+# Preprocessing follows the paper
+
+# Tokenization 
+# use spacy
+import spacy
+import re
+
+WORDS, SENTS = [], []
+
+nlp = spacy.load('en')
+doc = nlp(text) # doc is a list containing tokens of text
+
+# Regular expressions used to normalize digits
+_DIGIT_RE = re.compile(br"\d")
+
+# segmentation 
+#    two options: 1) sentences 2) discourses
+for sen in doc.sents:
+    for token in sen:
+        WORD.append(re.sub(_DIGIT_RE, "d", token))
+    SENTS.append(WORD)
+    WORD = []
+
+# Vocabulary
+
+
+
+
+# Digits are normalized but they may be important
+# All words are mapped into the vocabulary using the edit distance but this may increase the bias
